@@ -1,29 +1,23 @@
-package com.example;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 public class App {
     public static void main(String[] args) {
-
         ChromeOptions options = new ChromeOptions();
-
-        options.addArguments("--headless=new");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
-
+        
+        // Critical flags for CI/CD environments like Jenkins:
+        options.addArguments("--headless=new");          // Run without a GUI
+        options.addArguments("--no-sandbox");             // Bypass OS security model (Required for Jenkins/Root)
+        options.addArguments("--disable-dev-shm-usage");  // Overcome limited resource problems in VMs
+        options.addArguments("--disable-gpu");            // Disables GPU hardware acceleration
+        
         WebDriver driver = new ChromeDriver(options);
-
-        driver.get("https://www.saucedemo.com/");
-
-        driver.findElement(By.id("user-name")).sendKeys("standard_user");
-        driver.findElement(By.id("password")).sendKeys("secret_sauce");
-        driver.findElement(By.id("login-button")).click();
-
-        System.out.println(driver.getTitle());
-
+        
+        // Your automation code...
+        driver.get("https://www.google.com");
+        System.out.println("Page title is: " + driver.getTitle());
+        
         driver.quit();
     }
 }
