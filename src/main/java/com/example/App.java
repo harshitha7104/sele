@@ -7,17 +7,20 @@ public class App {
     public static void main(String[] args) {
         ChromeOptions options = new ChromeOptions();
         
-        // Critical flags for CI/CD environments like Jenkins:
-        options.addArguments("--headless=new");          // Run without a GUI
-        options.addArguments("--no-sandbox");             // Bypass OS security model (Required for Jenkins/Root)
-        options.addArguments("--disable-dev-shm-usage");  // Overcome limited resource problems in VMs
-        options.addArguments("--disable-gpu");            // Disables GPU hardware acceleration
+        // 1. FORCE Selenium to use the system installation path
+        options.setBinary("/usr/bin/google-chrome");
+        
+        // 2. Keep the critical sandbox/headless flags
+        options.addArguments("--headless=new");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-gpu");
         
         WebDriver driver = new ChromeDriver(options);
         
-        // Your automation code...
+        // Your automation logic
         driver.get("https://www.google.com");
-        System.out.println("Page title is: " + driver.getTitle());
+        System.out.println("Success! Title is: " + driver.getTitle());
         
         driver.quit();
     }
