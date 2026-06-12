@@ -34,7 +34,7 @@ pipeline {
 
         stage('Run Selenium App') {
             steps {
-                sh 'mvn exec:java -Dexec.mainClass="com.example.App"'
+                sh 'mvn clean compile exec:java -Dexec.mainClass="com.example.App"'
             }
         }
     }
